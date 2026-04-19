@@ -2,7 +2,7 @@ import os
 import base64
 import numpy as np
 import cv2
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from ultralytics import YOLO
 
@@ -18,7 +18,7 @@ model = YOLO(MODEL_PATH)
 
 @app.route('/', methods=['GET'])
 def index():
-    return "hello world"
+    return render_template('index.html')
 
 @app.route('/api/identify', methods=['POST'])
 def identify_animal():
