@@ -170,8 +170,11 @@ def environmental_data():
         return jsonify({'error': 'Internal server error'}), 500
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # Local development: run on localhost:5000
     # For local testing, use host='127.0.0.1' or 'localhost'
     # Note: If you need to access from other machines, change to host='0.0.0.0'
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    # app.run(host='127.0.0.1', port=5000, debug=True)
+if __name__ == '__main__':
+    # host='0.0.0.0' 表示监听所有网口，包括公网 IP
+    app.run(host='0.0.0.0', port=5000, debug=True)
