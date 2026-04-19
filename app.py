@@ -177,4 +177,4 @@ def environmental_data():
     # app.run(host='127.0.0.1', port=5000, debug=True)
 if __name__ == '__main__':
     # host='0.0.0.0' 表示监听所有网口，包括公网 IP
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
