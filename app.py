@@ -181,4 +181,4 @@ if __name__ == '__main__':
     # Local development: run on localhost:5000
     # For local testing, use host='127.0.0.1' or 'localhost'
     # Note: If you need to access from other machines, change to host='0.0.0.0'
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
