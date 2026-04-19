@@ -683,10 +683,14 @@ async function fetchEnvironmental(manual = false) {
         : '';
 
     try {
-        const resp = await fetch(`http://127.0.0.1:5000/api/environmental${params}`);
+        const url = `http://127.0.0.1:5000/api/environmental${params}`;
+        console.log('Fetching AQI from:', url);
+        const resp = await fetch(url);
+        console.log('Response status:', resp.status);
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const data = await resp.json();
-        if (data.error) throw new Error(data.error);
+        console.log('Received data:', data);
+        if (data.error) throw new Error(data.error + (data.detail ? ': ' + data.detail : ''));
 
         envData = data;
         envFetchedAt = Date.now();

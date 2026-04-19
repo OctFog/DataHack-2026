@@ -131,10 +131,12 @@ def environmental_data():
             '&timezone=auto'
         )
 
+        print(f'Fetching AQI data from: {url}')
         try:
             r = requests.get(url, timeout=8)
             r.raise_for_status()
             payload = r.json()
+            print(f'Open-Meteo response: {payload}')
         except Exception as fetch_err:
             print(f'Air quality fetch failed: {fetch_err}')
             return jsonify({
@@ -142,12 +144,15 @@ def environmental_data():
                 'detail': str(fetch_err),
             }), 502
 
+        # Parse the Open-Meteo API response
         current = payload.get('current') or {}
         aqi = current.get('us_aqi')
         pm25 = current.get('pm2_5')
         pm10 = current.get('pm10')
         ozone = current.get('ozone')
         co = current.get('carbon_monoxide')
+
+        print(f'Parsed AQI values - aqi: {aqi}, pm25: {pm25}, pm10: {pm10}')
 
         category, level, advice = _aqi_category(aqi)
 
@@ -167,14 +172,13 @@ def environmental_data():
 
     except Exception as e:
         print(f'Error in /api/environmental: {e}')
-        return jsonify({'error': 'Internal server error'}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': 'Internal server error', 'detail': str(e)}), 500
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     # Local development: run on localhost:5000
     # For local testing, use host='127.0.0.1' or 'localhost'
     # Note: If you need to access from other machines, change to host='0.0.0.0'
-    # app.run(host='127.0.0.1', port=5000, debug=True)
-if __name__ == '__main__':
-    # host='0.0.0.0' 表示监听所有网口，包括公网 IP
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)
